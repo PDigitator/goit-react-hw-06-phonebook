@@ -1,6 +1,6 @@
 import { useState } from 'react';
 
-import { nanoid } from 'nanoid';
+import { nanoid } from '@reduxjs/toolkit';
 import { Report } from 'notiflix/build/notiflix-report-aio';
 
 import useLocalStorage from '../hooks/useLocalStorage';
