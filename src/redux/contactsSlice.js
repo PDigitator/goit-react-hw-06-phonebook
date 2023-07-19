@@ -2,16 +2,6 @@ import { createSlice, nanoid } from '@reduxjs/toolkit';
 import { persistReducer } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
 
-// import type { PayloadAction } from '@reduxjs/toolkit';
-
-// export interface CounterState {
-//   value: number;
-// }
-
-// const initialState: CounterState = {
-//   value: 0,
-// };
-
 export const contactsSlice = createSlice({
   name: 'contacts',
   initialState: { items: [] },
@@ -31,7 +21,6 @@ export const contactsSlice = createSlice({
       },
     },
     deleteContact(state, action) {
-      console.log('state :>> ', state); //!
       return {
         items: state.items.filter(contact => contact.id !== action.payload),
       };
@@ -50,5 +39,3 @@ export const persistedContactsReducer = persistReducer(
 );
 
 export const { addContact, deleteContact } = contactsSlice.actions;
-
-// export const contactsReducer = contactsSlice.reducer; //!

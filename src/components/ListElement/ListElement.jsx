@@ -23,10 +23,10 @@ const ListElement = ({ element: { id, name, number } }) => {
 
 ListElement.propTypes = {
   element: PropTypes.shape({
+    id: PropTypes.string.isRequired,
     name: PropTypes.string.isRequired,
     number: PropTypes.string.isRequired,
   }).isRequired,
-  // deleteContact: PropTypes.func.isRequired,
 };
 
 export default ListElement;
