@@ -5,14 +5,18 @@ import {
   Span,
   Btn,
 } from 'components/ListElement/ListElement.styled';
+import { deleteContact } from 'redux/contactsSlice';
+import { useDispatch } from 'react-redux';
 
-const ListElement = ({ element: { name, number }, deleteContact }) => {
+const ListElement = ({ element: { id, name, number } }) => {
+  const dispatch = useDispatch();
+
   return (
     <>
       <Paragraph>
         {name}:<Span>{number}</Span>
       </Paragraph>
-      <Btn onClick={deleteContact}>Delete</Btn>
+      <Btn onClick={() => dispatch(deleteContact(id))}>Delete</Btn>
     </>
   );
 };
@@ -22,7 +26,7 @@ ListElement.propTypes = {
     name: PropTypes.string.isRequired,
     number: PropTypes.string.isRequired,
   }).isRequired,
-  deleteContact: PropTypes.func.isRequired,
+  // deleteContact: PropTypes.func.isRequired,
 };
 
 export default ListElement;

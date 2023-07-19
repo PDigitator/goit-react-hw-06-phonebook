@@ -9,19 +9,11 @@ import {
   REGISTER,
 } from 'redux-persist';
 import { filterReducer } from './filterSlice';
-import { contactsReducer } from './contactsSlice';
-
-// const persistConfig = {
-//   key: 'root',
-//   storage,
-// };
-
-// const persistedXXXReducer = persistReducer(persistConfig, clicksSlice.reducer);
+import { persistedContactsReducer } from './contactsSlice';
 
 export const store = configureStore({
   reducer: {
-    // clicks: persistedXXXReducer,
-    contacts: contactsReducer, //!
+    contacts: persistedContactsReducer,
     filter: filterReducer,
   },
   middleware(getDefaultMiddleware) {

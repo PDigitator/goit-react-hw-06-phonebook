@@ -1,42 +1,89 @@
-import { useState } from 'react';
+// import { useState } from 'react'; //!
+import { useDispatch, useSelector } from 'react-redux';
 
-import PropTypes from 'prop-types';
+// import PropTypes from 'prop-types'; //!
+import { Report } from 'notiflix';
 
+import { getContacts } from 'redux/selectors';
+import { addContact } from 'redux/contactsSlice';
 import Button from 'components/Button/Button';
 
 import { Form, Label, Input } from 'components/ContactForm/ContactForm.styled';
 
-const ContactForm = ({ addContact }) => {
-  const [name, setName] = useState('');
-  const [number, setNumber] = useState('');
+const ContactForm = () => {
+  // const [name, setName] = useState('');
+  // const [number, setNumber] = useState(''); //!
+  const contacts = useSelector(getContacts);
 
-  const handleChange = ({ target: { name, value } }) => {
-    switch (name) {
-      case 'name':
-        setName(value);
-        break;
+  console.log('contacts :>> ', contacts); //!
 
-      case 'number':
-        setNumber(value);
-        break;
+  const dispatch = useDispatch();
 
-      default:
-        break;
-    }
-  };
+  // const addContact = data => {
+  //   const newContact = {
+  //     id: nanoid(),
+  //     ...data,
+  //   };
+
+  //   if (
+  //     contacts.some(
+  //       contact => contact.name.toLowerCase() === newContact.name.toLowerCase()
+  //     )
+  //   ) {
+  //     Report.info('SORRY', `${newContact.name} is already in contacts.`, 'Ok');
+  //   } else {
+  //     setContacts(prevState => [...prevState, newContact]);
+  //   }
+  // }; //!
 
   const handleSubmit = event => {
     event.preventDefault();
+    const form = event.target;
+    const { name, number } = form.elements;
 
-    addContact({ name, number });
+    console.log('form.elements.name', name.value); //!
+    console.log('form.elements.number', number.value); //!
 
-    reset();
+    if (
+      contacts.some(
+        contact => contact.name.toLowerCase() === name.value.toLowerCase()
+      )
+    ) {
+      Report.info('SORRY', `${name.value} is already in contacts.`, 'Ok');
+    } else {
+      dispatch(addContact(name.value, number.value));
+    }
+
+    form.reset();
   };
 
-  const reset = () => {
-    setName('');
-    setNumber('');
-  };
+  // const handleChange = ({ target: { name, value } }) => {
+  //   switch (name) {
+  //     case 'name':
+  //       setName(value);
+  //       break;
+
+  //     case 'number':
+  //       setNumber(value);
+  //       break;
+
+  //     default:
+  //       break;
+  //   }
+  // }; //!
+
+  // const handleSubmitsss = event => {
+  //   event.preventDefault();
+
+  //   addContact({ name, number });
+
+  //   reset();
+  // };
+
+  // const reset = () => {
+  //   setName('');
+  //   setNumber('');
+  // }; //!
 
   return (
     <Form onSubmit={handleSubmit}>
@@ -48,8 +95,6 @@ const ContactForm = ({ addContact }) => {
           pattern="^[a-zA-Zа-яА-Я]+(([' \-][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$"
           title="Name may contain only letters, apostrophe, dash and spaces. For example Adrian, Jacob Mercer, Charles de Batz de Castelmore d'Artagnan"
           required
-          value={name}
-          onChange={handleChange}
         />
       </Label>
 
@@ -61,8 +106,6 @@ const ContactForm = ({ addContact }) => {
           pattern="\+?\d{1,4}?[\-.\s]?\(?\d{1,3}?\)?[\-.\s]?\d{1,4}[\-.\s]?\d{1,4}[\-.\s]?\d{1,9}"
           title="Phone number must be digits and can contain spaces, dashes, parentheses and can start with +"
           required
-          value={number}
-          onChange={handleChange}
         />
       </Label>
       <Button text="Add contact" />
@@ -70,6 +113,6 @@ const ContactForm = ({ addContact }) => {
   );
 };
 
-ContactForm.propTypes = { addContact: PropTypes.func.isRequired };
+// ContactForm.propTypes = { addContact: PropTypes.func }; //!
 
 export default ContactForm;
