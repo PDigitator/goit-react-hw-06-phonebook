@@ -4,7 +4,7 @@ import { getFilter } from 'redux/selectors';
 import { setFilter } from 'redux/filterSlice';
 
 const SearchFilter = () => {
-  const filter = useSelector(getFilter);
+  // const filter = useSelector(getFilter);
 
   const dispatch = useDispatch();
 
@@ -15,7 +15,7 @@ const SearchFilter = () => {
   return (
     <Label>
       Find contacts by name
-      <Input type="text" name="name" value={filter} onChange={search} />
+      <Input type="text" name="name" onChange={search} />
     </Label>
   );
 };
